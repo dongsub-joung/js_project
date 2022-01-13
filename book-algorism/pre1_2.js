@@ -12,7 +12,7 @@ function chk(remain, pre){
     if (remain < 0) return 0;
     if (remain == 0) return 1;
     for (let i = pre; i <= M; i++) {
-      cnt += (remain - i, i);
+      cnt += chk(remain - i, i);
     }
     return memo[[remain, pre]]= cnt;
 }
