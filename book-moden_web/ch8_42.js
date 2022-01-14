@@ -53,9 +53,36 @@ app.get('/user/:id', function (request, response) {
     response.send(DummyDB.get(request.params.id));
 });
 
-app.post('/user', function (request, response) { });
-app.put('/user/:id', function (request, response) { });
-app.delete('/user/:id', function (request, response) { });
+app.post('/user', function (request, response) { 
+    let name= request.body.name;
+    let region= request.body.region;
+
+    if (name && region){
+        response.send(DummyDB.insert({
+            name: name,
+            region: region
+        }));
+    } else {
+        throw new Error('error');
+    }
+});
+
+app.put('/user/:id', function (request, response) {
+    let id= request.params.id;
+    let name= request.body.name;
+    let region= request.body.region;
+
+    let item= DummyDB.get(id);
+    item.name= name || item.name;
+    item.region= region || item.region;
+
+    response.send(item);
+});
+
+
+app.delete('/user/:id', function (request, response) { 
+    response.send(DummyDB.remove(request.params.id));
+});
   
 app.listen(52273, function () {
   console.log('Server running at http://127.0.0.1:52273');
