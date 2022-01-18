@@ -1,9 +1,6 @@
+const M: number= 10;
+const N: number= 100;
 let check: (remain: number, pre: number) => number;
-
-let M= 10;
-let N= 100;
-let result: number= check(N,2);
-console.log(result);
 
 check= function (remain: number, pre: number): number{
     if (remain < 0)       {return 0;}
@@ -15,3 +12,4 @@ check= function (remain: number, pre: number): number{
     }
     return cnt;
 }
+console.log(check(N,2));

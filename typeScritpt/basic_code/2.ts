@@ -36,3 +36,57 @@ document.querySelector('.menu-item')!.innerHTML;
 
 
 // Guards
+// `typeof`, `in` and `instanceof`
+function isNumber(val: string | number): val is number {
+    return typeof val === 'number';
+}
+function someFunc(val: string | number) {
+    if (isNumber(val)) {
+        val.toFixed(2);
+        isNaN(val);
+    } else {
+        val.split('');
+        val.toUpperCase();
+        val.length;
+    }
+}
+
+
+// interface
+interface IUser {
+    name: string,
+    age: number,
+    isAdult?: boolean // Optional property
+}
+  
+
+// Readonly 
+interface IUser {
+    readonly name: string,
+    age: number
+}
+let user: IUser = {
+    name: 'Neo',
+    age: 36
+};
+// user.name= 'Evan'
+
+// Readonly utility
+interface IUser {
+    name: string,
+    age: number
+}
+  let user: Readonly<IUser> = {
+    name: 'Neo',
+    age: 36
+};
+
+// const
+let user = {
+    name: 'Neo',
+    age: 36
+} as const;
+
+
+// indexable types
+// https://heropy.blog/2020/01/27/typescript/
