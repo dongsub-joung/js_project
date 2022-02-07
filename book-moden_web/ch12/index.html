@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Node js</title>
+    <style>
+        .line {
+            overflow: hidden;
+        }
+        .seat {
+            margin: 2px;
+            float: left;
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+        }
+        .enable {
+            background: gray;
+        }
+        .enable:hover{
+            background: black;
+        }
+        .disable{
+            background: red;
+        }
+    </style>
+
+    <script src="http://code.jquery.com/jquery-1.12.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        let socket= io.connect();
+        socket.on('reserve', function (data) {
+            let $target= $('div[data-x= ' + data.x + 
+                '][data0y = ' + data.y + ']');
+            $target.removeClass('enable');
+            $target.addClass('disable');
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            let onClickSeat= function () {
+                let x= $(this).attr('data-x');
+                let y= $(this).attr('data-y');
+                if (confirm('Are you Booking a seat?')){
+                    $(this).off('click');
+                    socket.emit('reserve', {
+                        x: x,
+                        y: y,
+                    });
+                } else {
+                    alert("Undo");
+                }
+                $.getJSON('.seats', {dummy: new Date().getTime()}, function (data) {
+                    $.each(data, function (indexY, line) {
+                        let $line= $('<div></div>').addClass('line');
+                        $.each(line, function (indexX, seat) {
+                            let $output= $('<div></div>', {
+                                'class': 'seat',
+                                'data-x': indexX,
+                                'data-y': indexY,
+                            }).appendTo($line);
+                            if (seat == 1){
+                                $output.addClass('enable').on('click', onClickSeat);
+                            } else if (seat == 2){
+                                $output.addClass('disable');
+                            }
+                        });
+                        $line.appendTo('body');
+                    });
+                });
+            };
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    
+</body>
+</html>
