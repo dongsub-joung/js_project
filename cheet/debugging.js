@@ -1,4 +1,4 @@
-// Source remained
+// Source remained 
 // https://flaviocopes.com/debugging/
 
 // console.log();
@@ -16,4 +16,3 @@ const inspect = (obj) => {
   }
   
 inspect(car)
-
