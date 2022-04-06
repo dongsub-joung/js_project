@@ -40,7 +40,8 @@ const genesisBlock: Block= new Block(0, "20202020202", "", "hello", 123456);
 
 let blockchain: [Block]= [genesisBlock];
 
-// @ERR void' nor 'any'
+// @ERR     void' nor 'any'
+// @SOLVE   return type
 const getBlockChain= () : Block[] => {
     blockchain;
 }
@@ -64,9 +65,13 @@ const createNewBlock= (Date: string): Block => {
         previouseBlock.hash,
         data, newTimeStamp
     );
-
+    addBlcok(newBlock);
     return newBlock;
 };
+
+const getHashforBlock= (aBlock: Block): string => {
+    Block.calculateBalckHash(aBlock.index, aBlock.previsouHash, aBlock.timestamp, aBlock.data);
+}
 
 const isBalckValid= (candidateBlock: Block, previouseBlock: Block): boolean{
     if(Block.validatedStructure(candidateBlock)){
@@ -75,7 +80,17 @@ const isBalckValid= (candidateBlock: Block, previouseBlock: Block): boolean{
         return false;
     } else if( previouseBlock.hash !== candidateBlock.previsouHash){
         return false;
-    } else if ()
+    } else if ( getHashforBlock(candidateBlock) !== candidateBlock.hash){
+        return false;
+    } else {
+        return true;
+    }
 };
+
+const addBlcok= (candidateBlock: Block): void => {
+    if(isBalckValid(candidateBlock, getLatesBlock())){
+        blockchain.push(candidateBlock);
+    }
+}
 
 export{};
